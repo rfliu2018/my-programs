@@ -29,20 +29,21 @@ public class Grid {
     /**
      * 驱动蛇身的移动, 并且更新各个状态数值.
      */
-    public void move() {
+    public boolean move() {
         Node oldTail = snake.getTail();
-        System.out.println("oldTail:" + oldTail);
+//        System.out.println("oldTail:" + oldTail);
 
-        if (snake.move()) {  //成功移动则更新grid的status状态, null则失败.
+        if (snake.move() && headInGrid(snake.getHead())) {  //成功移动则更新grid的status状态, null则失败.
             Node newHead = snake.getHead();
 //            System.out.println("newHead:" + newHead);
             inSnake[newHead.getX()][newHead.getY()] = true;
             inSnake[oldTail.getX()][oldTail.getY()] = false;
-        }
+        } else
+            return false;
 
         if (snake.eat(food) != null)
             createFood();
-
+        return true;
     }
 
     private void createFood() {
@@ -59,6 +60,7 @@ public class Grid {
 
     /**
      * 有点多余的功能, 由键盘控制方向, 改变蛇头方向的中间代理
+     *
      * @param newDir
      * @return
      */
@@ -75,6 +77,11 @@ public class Grid {
 
     public Node getFood() {
         return food;
+    }
+
+    private boolean headInGrid(Node node) {
+        int x = node.getX(), y = node.getY();
+        return x >= 0 && x < COLS - 1 && y >= 0 && y < ROWS - 1;
     }
 }
 

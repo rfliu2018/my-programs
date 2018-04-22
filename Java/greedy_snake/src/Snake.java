@@ -53,7 +53,10 @@ public class Snake {
         body.remove(body.size() - 1);
         body.add(0, head);
 
-        return true;
+        //head&tail的位置已经移动,判断是否撞到自己
+        if (!snakeCrush())
+            return true;
+        return false;
     }
 
     /**
@@ -109,6 +112,16 @@ public class Snake {
         //不要忘了修改tail
         tail = getNextNode(tail);
         body.add(tail);
+    }
+
+    private boolean snakeCrush() {
+        for (int i = 1; i < body.size(); i++) {
+            if (Node.samePosition(head, body.get(i))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

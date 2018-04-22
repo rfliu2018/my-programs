@@ -1,18 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
-public class SnakeApp {
+public class SnakeApp implements Runnable {
     private JFrame window;
 
+    /**
+     * 并没有什么用处的构造器.
+     */
     SnakeApp() {
         window = new JFrame("贪吃蛇");
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    void init() {
-        /* 创建grid,  */
+    /**
+     * 构造一些必要的组件以及流程处理.
+     */
+    @Override
+    public void run() {
+        /* 创建grid, 交给gameView去显示 */
         Grid grid = new Grid();
 
         /* 创建gameVies */
@@ -21,38 +26,17 @@ public class SnakeApp {
         JPanel canvas = gameView.getCanvas();
 
         window.add(canvas, BorderLayout.CENTER);
-        window.pack();
+        window.pack();  //最好不要在构造器里如此
         window.setVisible(true);
 
-
-        window.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                switch (keyCode) {
-                    case KeyEvent.VK_UP:
-                        grid.changeDirection(Direction.UP);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        grid.changeDirection(Direction.DOWN);
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        grid.changeDirection(Direction.LEFT);
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        grid.changeDirection(Direction.RIGHT);
-                        break;
-                }
-
-                grid.move();
-//                gameView.draw();
-                canvas.repaint();
-            }
-        });
+        /* 添加监听器. */
+        GameController gameController = new GameController(grid, gameView, true);
+        window.addKeyListener(gameController);
+        new Thread(gameController).start();
     }
 
     public static void main(String[] args) {
         SnakeApp snakeApp = new SnakeApp();
-        snakeApp.init();
+        SwingUtilities.invokeLater(snakeApp);
     }
 }

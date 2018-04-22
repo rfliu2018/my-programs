@@ -2,13 +2,12 @@ import com.sun.istack.internal.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
-public class GameView {
+public class GameView {  //也可以继承自JPanel
     private Grid grid;  //要画的内容
     private JPanel canvas;  //提供画笔
-    static final int WIDTH = Grid.GRID_SPAN * Grid.COLS;
-    static final int HEIGHT = Grid.GRID_SPAN * Grid.ROWS;
+    private static final int WIDTH = Grid.GRID_SPAN * Grid.COLS;
+    private static final int HEIGHT = Grid.GRID_SPAN * Grid.ROWS;
 
     public GameView(Grid grid) {
         this.grid = grid;

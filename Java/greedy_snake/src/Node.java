@@ -7,6 +7,7 @@ public class Node {
 
     /**
      * 两节点是否相同位置.用以判断是否吃了food.
+     *
      * @param n1
      * @param n2
      * @return
@@ -16,7 +17,7 @@ public class Node {
     }
 
     public Node(int x, int y) {
-        this(x, y, Direction.LEFT);
+        this(x, y, Direction.RIGHT);
     }
 
     public Node(int x, int y, Direction dir) {
@@ -27,6 +28,7 @@ public class Node {
 
     /**
      * 借助画笔, node自己画自己.
+     *
      * @param g
      * @param c
      */

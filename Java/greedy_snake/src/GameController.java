@@ -46,6 +46,8 @@ public class GameController implements KeyListener, Runnable {
                 e.printStackTrace();
             }
         }
+
+        /* 处理结束的情况 */
     }
 
     @Override
